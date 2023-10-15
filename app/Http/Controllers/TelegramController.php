@@ -99,17 +99,22 @@ class TelegramController extends Controller
                     'chat_id' => $user_id,
                     'text' => $message,
                 ]);
+            }else{
+
+
+                $balance = User::where('t_user_id', $user_id)->first()->wallet ?? null;
+
+                $amount = number_format($balance, 2);
+                $message = "Your Account Balance is :- NGN$amount";
+
+                $this->sendMessage([
+                    'chat_id' => $user_id,
+                    'text' => $message,
+                ]);
+
             }
 
-            $balance = User::where('t_user_id', $user_id)->first()->wallet ?? null;
 
-            $amount = number_format($balance, 2);
-            $message = "Your Account Balance is :- NGN$amount";
-
-            $this->sendMessage([
-                'chat_id' => $user_id,
-                'text' => $message,
-            ]);
         }
     }
 
