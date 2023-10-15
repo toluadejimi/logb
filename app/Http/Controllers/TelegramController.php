@@ -202,39 +202,28 @@ class TelegramController extends Controller
 
 
 
-        if ($message_text == "/Google_Voice") {
+        // if ($message_text == "/Google_Voice") {
 
 
-            $get_item = MainItem::select('des', 'id')->where('product_id', 2)->take(10)->get();
+        //     $get_item = MainItem::select('des', 'id')->where('product_id', 2)->take(10)->get();
 
 
-            $formattedRow = [];
-            foreach ($get_item as $value) {
-                    $formattedRow[] = "/".$value['id']." - ".$value['des'];
-            }
-            $text = implode("\n", $formattedRow) . "\n";
-            $filename = date('ymdhis').'data.txt';
+        //     $formattedRow = [];
+        //     foreach ($get_item as $value) {
+        //             $formattedRow[] = "/".$value['id']." - ".$value['des'];
+        //     }
+        //     $text = implode("\n", $formattedRow) . "\n";
+        //     $filename = date('ymdhis').'data.txt';
 
 
-            $message = "List of Available Google Voice Number \n\n $text";
+        //     $message = "List of Available Google Voice Number \n\n $text";
 
-            $this->sendMessage([
-                'chat_id' => $user_id,
-                'text' => $message,
-            ]);
+        //     $this->sendMessage([
+        //         'chat_id' => $user_id,
+        //         'text' => $message,
+        //     ]);
 
-
-
-
-        }
-
-
-
-
-
-
-
-
+        // }
 
 
     }
