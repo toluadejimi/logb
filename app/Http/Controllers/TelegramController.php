@@ -144,7 +144,7 @@ class TelegramController extends Controller
 
 
 
-        if ($message_text == "Hi" || $message_text == "/start" || $message_text == "hi" || $message_text == "\main_menu") {
+        if ($message_text == "Hi" || $message_text == "/start" || $message_text == "hi" || $message_text == "/main_menu") {
 
             $message = "Welcome To LogsMarket
             \n\n
