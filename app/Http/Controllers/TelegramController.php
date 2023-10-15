@@ -205,6 +205,13 @@ class TelegramController extends Controller
         if ($message_text == "/Google_Voice") {
 
 
+            $message = "Hello";
+            $this->sendMessage([
+                'chat_id' => $data['message']['from']['id'],
+                'text' => $message,
+            ]);
+
+
             $get_item = MainItem::select('des', 'id')->where('product_id', 2)->take(10)->get();
 
 
@@ -216,7 +223,7 @@ class TelegramController extends Controller
             $filename = date('ymdhis').'data.txt';
 
 
-            $message = "List of Available Google Voice Number \n\n $text";
+            //$message = "List of Available Google Voice Number \n\n $text";
 
             $this->sendMessage([
                 'chat_id' => $user_id,
