@@ -55,9 +55,9 @@ class TelegramController extends Controller
                 'chat_id' => $user_id,
                 'text' => $message,
                 'reply_markup' => [
-                    'inline_keyboard' => [[
+                    'inline_keyboard' => [[[
                         'text' => '/Account Balance',
-                    ]],
+                    ]]],
                 ],
             ]);
 
