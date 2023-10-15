@@ -19,6 +19,9 @@ Route::get('/', function () {
 
 
 // 1. https://api.telegram.org/bot6672089802:AAElshUyomrixNlnmiJNb7g75v9ku5YG3zc/getUpdates
-// 2. https://api.telegram.org/bot6672089802:AAElshUyomrixNlnmiJNb7g75v9ku5YG3zc/setWebhook?url=https://telegram.logmarketplace.com/api/webhook
+// 2. https://api.telegram.org/bot6672089802:AAElshUyomrixNlnmiJNb7g75v9ku5YG3zc/setWebhook?url=https://telegram.logmarketplace.com/public/api/webhook
 // 3. https://api.telegram.org/bot6672089802:AAElshUyomrixNlnmiJNb7g75v9ku5YG3zc/getWebhookInfo
-// 4. https://api.telegram.org/bot<Your-token>/deleteWebhook
+// 4. https://api.telegram.org/bot6672089802:AAElshUyomrixNlnmiJNb7g75v9ku5YG3zc/deleteWebhook
+
+
+//curl -F "url=https://telegram.logmarketplace.com/public/api/webhook" "https://api.telegram.org/bot6672089802:AAElshUyomrixNlnmiJNb7g75v9ku5YG3zc/setWebhook"

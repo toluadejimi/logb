@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Response;
 use WeStacks\TeleBot\TeleBot;
 
@@ -30,46 +31,59 @@ class TelegramController extends Controller
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function telegram_webhook(Request $request)
     {
-        //+++++++++++++++++++++++++++++++++++++++++
-        //Webhook
-        //+++++++++++++++++++++++++++++++++++++++++
-
-
-
+        
         $data = $request->all();
 
-        return Response::json($data);
+        // Process the incoming data from Telegram
+        $message = $data['message']['text'];
 
+        // Construct the response message
+        $responseMessage = "You said: $message";
 
-        if ($data) {
-            $this->chat_id      = $data->message->chat->id;
-            $this->message_text = $data->message->text;
-        }
+        // Send the response back to the user on Telegram
+        $this->sendMessage([
+            'chat_id' => $data['message']['chat']['id'],
+            'text' => $responseMessage,
+        ]);
 
+        return response()->json(['message' => 'Webhook received and response sent']);
     }
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    public function sendMessage(Request $request)
+
+    private function sendMessage($data)
     {
-        try {
-            $message = $this->bot->sendMessage([
-                'chat_id'      => $this->chat_id,
-                'text'         => 'Welcome To Code-180 Youtube Channel',
-                'reply_markup' => [
-                    'inline_keyboard' => [[[
-                        'text' => '@code-180',
-                        'url'  => 'https://www.youtube.com/@code-180/videos',
-                    ]]],
-                ],
-            ]);
-            // $message = $this->bot->sendMessage([
-            //     'chat_id' => $this->chat_id,
-            //     'text'    => 'Welcome To Code-180 Youtube Channel',
-            // ]);
-        } catch (Exception $e) {
-            $message = 'Message: ' . $e->getMessage();
-        }
-        return Response::json($message);
+        $telegramToken = env('TELEGRAM_BOT_TOKEN');
+        $url = "https://api.telegram.org/bot$telegramToken/sendMessage";
+
+        $response = Http::post($url, $data);
+
+        // You can add error handling or log the response if needed
+        // For error handling, check $response->status() and $response->json()
     }
+
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // public function sendMessage(Request $request)
+    // {
+    //     try {
+    //         $message = $this->bot->sendMessage([
+    //             'chat_id'      => $this->chat_id,
+    //             'text'         => 'Welcome To Code-180 Youtube Channel',
+    //             'reply_markup' => [
+    //                 'inline_keyboard' => [[[
+    //                     'text' => '@code-180',
+    //                     'url'  => 'https://www.youtube.com/@code-180/videos',
+    //                 ]]],
+    //             ],
+    //         ]);
+    //         // $message = $this->bot->sendMessage([
+    //         //     'chat_id' => $this->chat_id,
+    //         //     'text'    => 'Welcome To Code-180 Youtube Channel',
+    //         // ]);
+    //     } catch (Exception $e) {
+    //         $message = 'Message: ' . $e->getMessage();
+    //     }
+    //     return Response::json($message);
+    // }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function sendPhoto(Request $request)
     {
