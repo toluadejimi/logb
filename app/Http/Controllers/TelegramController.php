@@ -31,8 +31,10 @@ class TelegramController extends Controller
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function telegram_webhook(Request $request)
     {
-        
+
         $data = $request->all();
+
+        dd($data);
 
         // Process the incoming data from Telegram
         $message = $data['message']['text'];
