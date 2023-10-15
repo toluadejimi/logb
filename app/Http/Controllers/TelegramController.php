@@ -35,12 +35,11 @@ class TelegramController extends Controller
 
         $json = json_encode($request->all());
 
+        // $data = json_decode($json, true);
 
-        $data = json_decode($json, true);
-
-        if ($data === null) {
-            return "Invalid JSON";
-        }
+        // if ($data === null) {
+        //     return "Invalid JSON";
+        // }
 
 
         //$message_text = $data['message']['text'];
