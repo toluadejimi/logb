@@ -180,7 +180,7 @@ class TelegramController extends Controller
     while (true) {
 
         // Call /getUpdates
-        $updates = @file_get_contents("https://telegram.logmarketplace.com/public/api/webhook");
+        $updates = @file_get_contents("https://api.telegram.org/bot$token/getUpdates");
         $updates = json_decode($updates);
 
         // Check if we've got a button press
