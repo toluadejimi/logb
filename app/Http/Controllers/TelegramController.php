@@ -9,6 +9,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Response;
+use Telegram\Bot\Keyboard\Keyboard;
+use Telegram\Bot\Laravel\Facades\Telegram;
 use WeStacks\TeleBot\TeleBot;
 
 class TelegramController extends Controller
@@ -69,8 +71,6 @@ class TelegramController extends Controller
                 'chat_id' => $user_id,
                 'text' => $message,
             ]);
-
-
         }
 
         if (str_contains($message_text, '@')) {
@@ -78,13 +78,13 @@ class TelegramController extends Controller
 
             $user_id =  $data['message']['from']['id'];
             $user_id = User::where('t_user_id', $user_id)->first()->t_user_id ?? null;
-            if($user_id == null){
+            if ($user_id == null) {
 
 
                 $user_id =  $data['message']['from']['id'];
 
                 User::where('email', $message_text)->update([
-                    't_user_id' =>$data['message']['from']['id']
+                    't_user_id' => $data['message']['from']['id']
                 ]);
 
                 $message = "Email has been registered\n
@@ -94,8 +94,7 @@ class TelegramController extends Controller
                     'chat_id' => $user_id,
                     'text' => $message,
                 ]);
-
-            }else{
+            } else {
 
                 $wallet = User::where('t_user_id', $data['message']['from']['id'])->first()->wallet ?? null;
 
@@ -106,14 +105,7 @@ class TelegramController extends Controller
                     'chat_id' => $user_id,
                     'text' => $message,
                 ]);
-
             }
-
-
-
-
-
-
         }
 
 
@@ -123,7 +115,7 @@ class TelegramController extends Controller
 
 
             $message =
-            "Please select a service
+                "Please select a service
 
             1. /Google_Voice - To Buy Google Voice  Logs\n
             2. /Facebook - To Buy Facebook Logs \n
@@ -138,9 +130,6 @@ class TelegramController extends Controller
                 'chat_id' => $user_id,
                 'text' => $message,
             ]);
-
-
-
         }
 
 
@@ -148,22 +137,55 @@ class TelegramController extends Controller
 
         if ($message_text == "Hi" || $message_text == "/start" || $message_text == "hi" || $message_text == "/main_menu") {
 
-            $message = "
-            ==================================
-            Welcome To LogsMarket
-            One stop shop for all your logs
-            ==================================
-            \n
-            /account_balance - Check your account balance\n
-            /fund_wallet - Fund Your Wallet\n
-            /buy_log - Buy Logs\n
-            /contact - Contact Us
-            ";
+            // $message = "
+            // ==================================
+            // Welcome To LogsMarket
+            // One stop shop for all your logs
+            // ==================================
+            // \n
+            // /account_balance - Check your account balance\n
+            // /fund_wallet - Fund Your Wallet\n
+            // /buy_log - Buy Logs\n
+            // /contact - Contact Us
 
-            $this->sendMessage([
-                'chat_id' => $user_id,
-                'text' => $message,
+
+            // ";
+
+            // $message = array([
+            //     'text'         => 'Welcome To Code-180 Youtube Channel',
+            //     'reply_markup' => [
+            //         'inline_keyboard' => [[[
+            //             'text' => '@code-180',
+            //             'url'  => 'https://www.youtube.com/@code-180/videos',
+            //         ]]],
+            //     ],
+            // ]);
+
+            // $this->sendMessage([
+            //     'chat_id' => $user_id,
+            //     'text' => $message,
+            // ]);
+
+
+
+            $message = $this->bot->sendMessage([
+                'chat_id'      => $data['message']['from']['id'],
+                'text'         => 'Welcome To Code-180 Youtube Channel',
+                'reply_markup' => [
+                    'inline_keyboard' => [[[
+                        'text' => 'Fund Wallet',
+                        'callback_data' => '/fund_wallet',
+                    ]]],
+                    
+                ],
             ]);
+            // $message = $this->bot->sendMessage([
+            //     'chat_id' => $this->chat_id,
+            //     'text'    => 'Welcome To Code-180 Youtube Channel',
+            // ]);
+
+
+
         }
 
 
@@ -181,7 +203,7 @@ class TelegramController extends Controller
                     'chat_id' => $user_id,
                     'text' => $message,
                 ]);
-            }else{
+            } else {
 
 
                 $balance = User::where('t_user_id', $user_id)->first()->wallet ?? null;
@@ -193,10 +215,7 @@ class TelegramController extends Controller
                     'chat_id' => $user_id,
                     'text' => $message,
                 ]);
-
             }
-
-
         }
 
 
@@ -209,10 +228,10 @@ class TelegramController extends Controller
 
             $formattedRow = [];
             foreach ($get_item as $value) {
-                    $formattedRow[] = "/".$value['id']." - ".$value['des'];
+                $formattedRow[] = "/" . $value['id'] . " - " . $value['des'];
             }
             $text = implode("\n", $formattedRow) . "\n";
-            $filename = date('ymdhis').'data.txt';
+            $filename = date('ymdhis') . 'data.txt';
 
 
             $message = "List of Available Google Voice Number \n\n $text";
@@ -221,10 +240,7 @@ class TelegramController extends Controller
                 'chat_id' => $data['message']['from']['id'],
                 'text' => $message,
             ]);
-
         }
-
-
     }
 
 
