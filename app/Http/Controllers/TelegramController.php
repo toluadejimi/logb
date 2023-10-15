@@ -125,10 +125,10 @@ class TelegramController extends Controller
             $message =
             "Please select a service
 
-            1. /Google_Voice \n
-            2. /Facebook\n
-            3. /Instgram_Account\n
-            4. /Talkatone\n
+            1. /Google_Voice - To Buy Google Voice  Logs\n
+            2. /Facebook - To Buy Facebook Logs \n
+            3. /Instgram -  To Buy Instaragm Logs\n
+            4. /Talkatone - To Buy Talkatone Logs\n
 
             Go back to menu
             /main_menu";
@@ -149,15 +149,13 @@ class TelegramController extends Controller
         if ($message_text == "Hi" || $message_text == "/start" || $message_text == "hi" || $message_text == "/main_menu") {
 
             $message = "Welcome To LogsMarket
+            One stop shop for all your logs
             \n\n
-            To check account Balance Reply with
-            /account_balance\n
-            To Fund Wallet Reply with
-            /fund_wallet\n
-            To Buy Log Reply with
-            /buy_log\n
-            To Fund Wallet Reply with
-            /contact
+
+            /account_balance - Check your account balance\n
+            /fund_wallet - Fund Your Wallet\n
+            /buy_log - Buy Logs\n
+            /contact - Contact Us
 
             ";
 
@@ -203,9 +201,6 @@ class TelegramController extends Controller
 
 
         if ($message_text == "/Google_Voice") {
-
-
-
 
 
             $get_item = MainItem::select('des', 'id')->where('product_id', 2)->take(10)->get();
