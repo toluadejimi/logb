@@ -121,11 +121,14 @@ class TelegramController extends Controller
 
 
             $message =
-            "1. /Google_Voice \n
+            "Please select a service
+
+            1. /Google_Voice \n
             2. /Facebook\n
             3. /Instgram_Account\n
             4. /Talkatone\n
 
+            Go back to menu
             /main_menu";
 
 
