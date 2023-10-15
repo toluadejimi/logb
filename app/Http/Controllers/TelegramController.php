@@ -43,11 +43,11 @@ class TelegramController extends Controller
         }
 
 
-        $message_text = $data['message']['text'];
+        //$message_text = $data['message']['text'];
 
 
 
-        $message = $message_text;
+        $message = $json;
 
 
 
