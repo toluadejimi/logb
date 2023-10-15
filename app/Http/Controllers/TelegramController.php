@@ -54,6 +54,11 @@ class TelegramController extends Controller
             $this->sendMessage([
                 'chat_id' => $user_id,
                 'text' => $message,
+                'reply_markup' => [
+                    'inline_keyboard' => [[
+                        'text' => '/Account Balance',
+                    ]],
+                ],
             ]);
 
         }
