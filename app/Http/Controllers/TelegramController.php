@@ -62,9 +62,13 @@ class TelegramController extends Controller
 
         if($message_text == "Hi" || $message_text == "/start" ||$message_text == "hi" ){
 
-            $message = "Welcome To LogsMarket";
+            $message = "Welcome To LogsMarket
 
-            //\n\nTo check account Balance Reply with\n/account-balance\n\nTo Fund Wallet Reply with\n/fund-wallet\n\nTo Buy Log Reply with\n/buy-log\n\nTo Fund Wallet Reply with\n/contact
+            \n\nTo check account Balance Reply with\n/account-balance\n\nTo Fund Wallet Reply with\n/fund-wallet\n\nTo Buy Log Reply with\n/buy-log\n\nTo Fund Wallet Reply with\n/contact
+
+            ";
+
+
 
             $this->sendMessage([
                 'chat_id' => $user_id,
