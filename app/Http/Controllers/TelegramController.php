@@ -76,7 +76,7 @@ class TelegramController extends Controller
             $user_id =  $data['message']['from']['id'];
 
             $message = "Email has been registered\n
-            \main_menu | $user_id";
+            \main_menu | $user_id | $message_text";
 
             $this->sendMessage([
                 'chat_id' => $user_id,
