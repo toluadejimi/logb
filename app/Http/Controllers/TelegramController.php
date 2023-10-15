@@ -115,6 +115,28 @@ class TelegramController extends Controller
         }
 
 
+        if ($message_text == "/buy_log") {
+
+            $user_id =  $data['message']['from']['id'];
+
+
+            $message =
+            "1. /Google_Voice \n
+            2. /Facebook\n
+            3. /Instgram_Account\n
+            4. /Talkatone\n
+
+            /main_menu";
+
+
+            $this->sendMessage([
+                'chat_id' => $user_id,
+                'text' => $message,
+            ]);
+
+
+
+        }
 
 
 
