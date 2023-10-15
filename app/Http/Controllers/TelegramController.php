@@ -46,16 +46,16 @@ class TelegramController extends Controller
         $message_text = $data['message']['text'];
         $user_id =  $data['message']['from']['id'];
 
-        $username = User::where('t_user_id', $user_id)->first()->username ?? null;
-        $balance = User::where('t_user_id', $user_id)->first()->wallet ?? null;
-        $username = User::where('t_user_id', $user_id)->first()->username ?? null;
+        // $username = User::where('t_user_id', $user_id)->first()->username ?? null;
+        // $balance = User::where('t_user_id', $user_id)->first()->wallet ?? null;
+        // $username = User::where('t_user_id', $user_id)->first()->username ?? null;
 
 
-        if($username == null){
+        // if($username == null){
 
 
 
-        }
+        // }
 
 
 
