@@ -81,13 +81,8 @@ class TelegramController extends Controller
 
                 $user_id =  $data['message']['from']['id'];
 
-                $ur = new User();
-                $ur->username = "jimmy";
-                $ur->t_user_id = $data['message']['from']['id'];
-                $ur->save();
-
                 User::where('email', $message_text)->update([
-                    't_user_id' => $user_id
+                    't_user_id' =>$data['message']['from']['id']
                 ]);
 
                 $message = "Email has been registered\n
