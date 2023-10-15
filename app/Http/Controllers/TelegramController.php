@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\MainItem;
 use App\Models\User;
 use Exception;
@@ -201,23 +202,21 @@ class TelegramController extends Controller
 
 
 
-        if ($message_text == " /Google_Voice") {
+        if ($message_text == "/Google_Voice") {
 
 
-            $get_item = MainItem::select('name', 'id')->where('product_id', 4)->take(10)->get();
+            $get_item = MainItem::select('des', 'id')->where('product_id', 2)->take(10)->get();
 
 
             $formattedRow = [];
             foreach ($get_item as $value) {
-                    $formattedRow[] = $value['id']['name'];
+                    $formattedRow[] = "/".$value['id']." - ".$value['des'];
             }
             $text = implode("\n", $formattedRow) . "\n";
             $filename = date('ymdhis').'data.txt';
 
-            $get_item = MainItem::whereIn('name', $get_item->pluck('name'))
-            ->delete();
 
-            $message = $text;
+            $message = "List of Available Google Voice Number \n\n $text";
 
             $this->sendMessage([
                 'chat_id' => $user_id,
