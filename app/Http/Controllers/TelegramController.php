@@ -172,6 +172,52 @@ class TelegramController extends Controller
             $url = "https://api.telegram.org/bot$token/sendMessage?{$data}&reply_markup={$keyboard}";
             $res = @file_get_contents($url);
 
+
+            // Get message_id to alter later
+    $message_id = json_decode($res)->result->message_id;
+
+    // Continually check for a 'press'
+    while (true) {
+
+        // Call /getUpdates
+        $updates = @file_get_contents("https://telegram.logmarketplace.com/public/api/webhook");
+        $updates = json_decode($updates);
+
+        // Check if we've got a button press
+        if (count($updates->result) > 0 && isset(end($updates->result)->callback_query->data)) {
+
+            // Get callback data
+            $callBackData = end($updates->result)->callback_query->data;
+
+            // Check for 'stop'
+            if ($callBackData === 'stop') {
+
+                // Say goodbye and remove keyboard
+                $data = http_build_query([
+                    'text' => 'Bye!',
+                    'chat_id' => $data['message']['from']['id'],
+                    'message_id' => $message_id
+                ]);
+                $alter_res = @file_get_contents("https://api.telegram.org/bot$token/editMessageText?{$data}");
+
+                // End while
+                break;
+            }
+
+            // Alter text with callback_data
+            $data = http_build_query([
+                'text' => 'Selected: ' . $callBackData,
+                'chat_id' => $data['message']['from']['id'],
+                'message_id' => $message_id
+            ]);
+            $alter_res = @file_get_contents("https://api.telegram.org/bot$token/editMessageText?{$data}&reply_markup={$keyboard}");
+        }
+
+        // Sleep for a second, and check again
+        sleep(1);
+    }
+
+
             // $message = "
             // ==================================
             // Welcome To LogsMarket
