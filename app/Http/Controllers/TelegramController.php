@@ -42,26 +42,9 @@ class TelegramController extends Controller
             return "Invalid JSON";
         }
 
-        $update_id = $data['update_id'];
-        $message_id = $data['message']['message_id'];
-        $user_id = $data['message']['from']['id'];
-        $user_first_name = $data['message']['from']['first_name'];
-        $user_username = $data['message']['from']['username'];
-        $chat_id = $data['message']['chat']['id'];
-        $chat_type = $data['message']['chat']['type'];
-        $message_text = $data['message']['text'];
-        $message_date = date("Y-m-d H:i:s", $data['message']['date']);
 
-        // You can process the extracted data here or return it as needed
-        $result = "Update ID: $update_id\n";
-        $result .= "Message ID: $message_id\n";
-        $result .= "User ID: $user_id\n";
-        $result .= "User First Name: $user_first_name\n";
-        $result .= "User Username: $user_username\n";
-        $result .= "Chat ID: $chat_id\n";
-        $result .= "Chat Type: $chat_type\n";
-        $result .= "Message Text: $message_text\n";
-        $result .= "Message Date: $message_date\n";
+        $message_text = $data['message']['text'];
+
 
 
         $message = $message_text;
