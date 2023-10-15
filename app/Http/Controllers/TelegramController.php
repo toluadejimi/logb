@@ -63,17 +63,57 @@ class TelegramController extends Controller
         if($message_text == "Hi" || $message_text == "/start" ||$message_text == "hi" ){
 
             $message = "Welcome To LogsMarket
-
-            \n\nTo check account Balance Reply with\n/account-balance\n\nTo Fund Wallet Reply with\n/fund-wallet\n\nTo Buy Log Reply with\n/buy-log\n\nTo Fund Wallet Reply with\n/contact
+            \n\n
+            To check account Balance Reply with\n
+            /account_balance
+            \n\n
+            To Fund Wallet Reply with\n
+            /fund_wallet
+            \n\n
+            To Buy Log Reply with\n
+            /buy_log
+            \n\n
+            To Fund Wallet Reply with\n
+            /contact
 
             ";
-
-
 
             $this->sendMessage([
                 'chat_id' => $user_id,
                 'text' => $message,
             ]);
+
+        }
+
+
+        if($message_text == "account_balance"){
+
+
+        $username = User::where('t_user_id', $user_id)->first()->username ?? null;
+
+        if($username == null){
+
+            $message = "Please kindly reply with your email to proceed";
+
+            $this->sendMessage([
+                'chat_id' => $user_id,
+                'text' => $message,
+            ]);
+
+        }
+
+        $balance = User::where('t_user_id', $user_id)->first()->wallet ?? null;
+
+        $amount = number_format($balance, 2);
+        $message = "Your Account Balance is :- NGN$amount";
+
+        $this->sendMessage([
+            'chat_id' => $user_id,
+            'text' => $message,
+        ]);
+
+
+
 
         }
 
