@@ -86,7 +86,7 @@ class TelegramController extends Controller
                 ]);
 
                 $message = "Email has been registered\n
-                \main_menu";
+                /main_menu";
 
                 $this->sendMessage([
                     'chat_id' => $user_id,
@@ -95,8 +95,10 @@ class TelegramController extends Controller
 
             }else{
 
-                $username = User::where('email', $message_text)->first()->username ?? null;
-                $message = "Welcome $username";
+                $wallet = User::where('t_user_id', $data['message']['from']['id'])->first()->wallet ?? null;
+
+                $amount = number_format($wallet, 2);
+                $message = "Your Account Balance is :- NGN$amount";
 
                 $this->sendMessage([
                     'chat_id' => $user_id,
