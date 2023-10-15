@@ -73,22 +73,35 @@ class TelegramController extends Controller
 
         if (str_contains($message_text, '@')) {
 
-            $user_id =  $data['message']['from']['id'];
-
-            $user_id = User::where('t_user_id', $user_id)->first()->t_user_id ?? null;
-
-            if($user_id == null){
-                $set_user_id = User::where('email', $message_text)->update(['t_user_id'=>$user_id])->username ?? null;
-            }
-
-            $username = User::where('email', $message_text)->first()->username ?? null;
-
-            $message = "Welcome $username";
+            $message = "Welcome $message_text";
 
             $this->sendMessage([
                 'chat_id' => $user_id,
                 'text' => $message,
             ]);
+
+            $user_id =  $data['message']['from']['id'];
+
+            $user_id = User::where('t_user_id', $user_id)->first()->t_user_id ?? null;
+            if($user_id == null){
+
+                User::where('email', $message_text)->update(['t_user_id'=>$user_id]);
+
+            }else{
+
+                $username = User::where('email', $message_text)->first()->username ?? null;
+                $message = "Welcome $username";
+
+                $this->sendMessage([
+                    'chat_id' => $user_id,
+                    'text' => $message,
+                ]);
+
+            }
+
+
+
+
 
 
         }
