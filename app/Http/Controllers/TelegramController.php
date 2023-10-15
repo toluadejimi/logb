@@ -36,7 +36,10 @@ class TelegramController extends Controller
 
         $data = $request->all();
 
-        $message = $data['message']['text'];
+        $gmessage = $data['message']['text'];
+
+        $message = json_encode($gmessage);
+
 
 
 
