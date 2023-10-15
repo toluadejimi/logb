@@ -137,6 +137,41 @@ class TelegramController extends Controller
 
         if ($message_text == "Hi" || $message_text == "/start" || $message_text == "hi" || $message_text == "/main_menu") {
 
+
+
+
+            $token = '6672089802:AAElshUyomrixNlnmiJNb7g75v9ku5YG3zc';
+
+            // Create data
+            $data = http_build_query([
+                'text' => 'Yes - No - Stop?',
+                'chat_id' => $data['message']['from']['id']
+            ]);
+
+            // Create keyboard
+            $keyboard = json_encode([
+                "inline_keyboard" => [
+                    [
+                        [
+                            "text" => "Yes",
+                            "callback_data" => "/start"
+                        ],
+                        [
+                            "text" => "No",
+                            "callback_data" => "no"
+                        ],
+                        [
+                            "text" => "Stop",
+                            "callback_data" => "stop"
+                        ]
+                    ]
+                ]
+            ]);
+
+            // Send keyboard
+            $url = "https://api.telegram.org/bot$token/sendMessage?{$data}&reply_markup={$keyboard}";
+            $res = @file_get_contents($url);
+
             // $message = "
             // ==================================
             // Welcome To LogsMarket
@@ -167,18 +202,31 @@ class TelegramController extends Controller
             // ]);
 
 
+            // $keyboard = json_encode([
+            //     "inline_keyboard" => [
+            //         [
+            //             [
+            //                 "text" => "Yes",
+            //                 "callback_data" => "yes"
+            //             ],
+            //             [
+            //                 "text" => "No",
+            //                 "callback_data" => "no"
+            //             ],
+            //             [
+            //                 "text" => "Stop",
+            //                 "callback_data" => "stop"
+            //             ]
+            //         ]
+            //     ]
+            // ]);
 
-            $message = $this->bot->sendMessage([
-                'chat_id'      => $data['message']['from']['id'],
-                'text'         => 'Welcome To Code-180 Youtube Channel',
-                'reply_markup' => [
-                    'inline_keyboard' => [[[
-                        'text' => 'Account Balance',
-                        'callback_data' => '/account_balance',
-                    ]]],
 
-                ],
-            ]);
+            // $message = $this->bot->sendMessage([
+            //     'chat_id'      => $data['message']['from']['id'],
+            //     'text'         => 'Welcome To Code-180 Youtube Channel',
+            //     'reply_markup' => $keyboard,
+            // ]);
             // $message = $this->bot->sendMessage([
             //     'chat_id' => $this->chat_id,
             //     'text'    => 'Welcome To Code-180 Youtube Channel',
