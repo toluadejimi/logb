@@ -49,13 +49,34 @@ class TelegramController extends Controller
         if($message_text == "Hi" || $message_text == "/start" ||$message_text == "hi" ){
 
             $message = "Welcome To LogsMarket";
-            $send = $this->WelcomeMessage($message, $user_id);
+            try {
+                $message = $this->bot->sendMessage([
+                    'chat_id'      => $user_id,
+                    'text'         => $message,
+                    'reply_markup' => [
+                        'inline_keyboard' => [[[
+                            'text' => '/Account Balance',
+                        ]]],
+                    ],
+                ]);
+                // $message = $this->bot->sendMessage([
+                //     'chat_id' => $this->chat_id,
+                //     'text'    => 'Welcome To Code-180 Youtube Channel',
+                // ]);
+            } catch (Exception $e) {
+                $result = 'Message: ' . $e->getMessage();
+            }
+
+            $message = $result;
+
+            return Response::json($result);
+
 
         }
 
 
 
-        $message = $user_id;
+
 
 
 
