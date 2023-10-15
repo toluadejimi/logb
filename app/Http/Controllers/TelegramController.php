@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -45,20 +46,43 @@ class TelegramController extends Controller
         $message_text = $data['message']['text'];
         $user_id =  $data['message']['from']['id'];
 
+        $username = User::where('t_user_id', $user_id)->first()->username ?? null;
+        $balance = User::where('t_user_id', $user_id)->first()->wallet ?? null;
+        $username = User::where('t_user_id', $user_id)->first()->username ?? null;
+
+
+        if($username == null){
+
+
+
+        }
+
+
+
 
         if($message_text == "Hi" || $message_text == "/start" ||$message_text == "hi" ){
 
-            $message = "Welcome To LogsMarket";
+            $message = "Welcome To LogsMarket
+
+            \n\n
+            To check account Balance Reply with\n
+            /account-balance
+            \n\n
+            To Fund Wallet Reply with\n
+            /fund-wallet
+            \n\n
+            To Buy Log Reply with\n
+            /buy-log
+            \n\n
+            To Fund Wallet Reply with\n
+            /contact
+
+            ";
 
 
             $this->sendMessage([
                 'chat_id' => $user_id,
                 'text' => $message,
-                'reply_markup' => [
-                    'inline_keyboard' => [[[
-                        'text' => '/Account Balance',
-                    ]]],
-                ],
             ]);
 
         }
