@@ -173,10 +173,10 @@ class TelegramController extends Controller
                 'text'         => 'Welcome To Code-180 Youtube Channel',
                 'reply_markup' => [
                     'inline_keyboard' => [[[
-                        'text' => 'Fund Wallet',
-                        'callback_data' => '/fund_wallet',
+                        'text' => 'Account Balance',
+                        'callback_data' => '/account_balance',
                     ]]],
-                    
+
                 ],
             ]);
             // $message = $this->bot->sendMessage([
