@@ -57,6 +57,20 @@ class TelegramController extends Controller
 
         // }
 
+
+        if (str_contains($message_text, 'set')) {
+
+
+            $message = "Welcome";
+
+            $this->sendMessage([
+                'chat_id' => $user_id,
+                'text' => $message,
+            ]);
+
+
+        }
+
         if (str_contains($message_text, '@')) {
 
             $user_id =  $data['message']['from']['id'];
