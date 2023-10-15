@@ -66,13 +66,13 @@ class TelegramController extends Controller
             \n\n
             To check account Balance Reply with\n
             /account_balance
-            \n\n
+            \n
             To Fund Wallet Reply with\n
             /fund_wallet
-            \n\n
+            \n
             To Buy Log Reply with\n
             /buy_log
-            \n\n
+            \n
             To Fund Wallet Reply with\n
             /contact
 
