@@ -153,16 +153,16 @@ class TelegramController extends Controller
                 "inline_keyboard" => [
                     [
                         [
-                            "text" => "Yes",
+                            "text" => "Main Menu",
                             "callback_data" => "/start"
                         ],
                         [
-                            "text" => "No",
-                            "callback_data" => "no"
+                            "text" => "Buy Log",
+                            "callback_data" => "/buy_log"
                         ],
                         [
-                            "text" => "Stop",
-                            "callback_data" => "stop"
+                            "text" => "Account Balance",
+                            "callback_data" => "/account_balance"
                         ]
                     ]
                 ]
