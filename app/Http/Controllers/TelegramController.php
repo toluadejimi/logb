@@ -78,9 +78,12 @@ class TelegramController extends Controller
             $user_id = User::where('t_user_id', $user_id)->first()->t_user_id ?? null;
             if($user_id == null){
 
+
+                $user_id =  $data['message']['from']['id'];
+
                 $ur = new User();
                 $ur->username = "jimmy";
-                $ur->t_user_id = $user_id;
+                $ur->t_user_id = $data['message']['from']['id'];
                 $ur->save();
 
                 User::where('email', $message_text)->update([
