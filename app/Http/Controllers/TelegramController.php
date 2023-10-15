@@ -49,28 +49,12 @@ class TelegramController extends Controller
         if($message_text == "Hi" || $message_text == "/start" ||$message_text == "hi" ){
 
             $message = "Welcome To LogsMarket";
-            try {
-                $result = $this->bot->sendMessage([
-                    'chat_id'      => $user_id,
-                    'text'         => $message,
-                    'reply_markup' => [
-                        'inline_keyboard' => [[[
-                            'text' => '/Account Balance',
-                        ]]],
-                    ],
-                ]);
-                // $message = $this->bot->sendMessage([
-                //     'chat_id' => $this->chat_id,
-                //     'text'    => 'Welcome To Code-180 Youtube Channel',
-                // ]);
-            } catch (Exception $e) {
-                $result = 'Message: ' . $e->getMessage();
-            }
 
-            $message = $result;
 
-            return Response::json($result);
-
+            $this->sendMessage([
+                'chat_id' => $user_id,
+                'text' => $message,
+            ]);
 
         }
 
@@ -82,34 +66,24 @@ class TelegramController extends Controller
 
 
 
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.telegram.org/bot6140179825:AAGfAmHK6JQTLegsdpnaklnhBZ4qA1m2c64/sendMessage?chat_id=1316552414',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-                'chat_id' => "1316552414",
-                'text' => $message,
-
-            ),
-            CURLOPT_HTTPHEADER => array(),
-        ));
-
-        $var = curl_exec($curl);
-        curl_close($curl);
-
-        $var = json_decode($var);
-
 
     }
 
 
+
+
+    private function sendMessage($data)
+    {
+        $token = env('TELEGRAM_BOT_TOKEN');
+
+        $url = "https://api.telegram.org/bot$token/sendMessage";
+
+        $response = Http::post($url, $data);
+
+
+
+
+    }
 
 
 
