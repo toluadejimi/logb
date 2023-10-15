@@ -33,13 +33,12 @@ class TelegramController extends Controller
     {
 
         //$data = $request->all();
-        // $data = json_encode($request->all());
+        $data = json_encode($request->all());
 
 
 
-        // $message = $data;
+        $message = $data;
 
-        $message = "Hello";
 
         $curl = curl_init();
 
