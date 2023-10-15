@@ -34,11 +34,9 @@ class TelegramController extends Controller
 
         try {
 
-        //$data = $request->all();
-        $data = json_encode($request->all());
-        $message = $data;
+        $data = $request->all();
 
-        $message = $data->message->chat->text;
+        $message = $data['message']['text'];
 
 
 
@@ -83,6 +81,8 @@ class TelegramController extends Controller
 
     } catch (Exception $e) {
         $message = 'Message: ' . $e->getMessage();
+
+
 
         $curl = curl_init();
 
