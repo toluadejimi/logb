@@ -73,7 +73,7 @@ class TelegramController extends Controller
 
         if (str_contains($message_text, '@')) {
 
-         
+
 
             $user_id =  $data['message']['from']['id'];
 
@@ -81,6 +81,14 @@ class TelegramController extends Controller
             if($user_id == null){
 
                 User::where('email', $message_text)->update(['t_user_id'=>$user_id]);
+
+                $message = "Email has been registered\n
+                \main_menu";
+
+                $this->sendMessage([
+                    'chat_id' => $user_id,
+                    'text' => $message,
+                ]);
 
             }else{
 
@@ -106,20 +114,17 @@ class TelegramController extends Controller
 
 
 
-        if ($message_text == "Hi" || $message_text == "/start" || $message_text == "hi") {
+        if ($message_text == "Hi" || $message_text == "/start" || $message_text == "hi" || $message_text == "\main_menu") {
 
             $message = "Welcome To LogsMarket
             \n\n
-            To check account Balance Reply with\n
+            To check account Balance Reply with
             /account_balance
-            \n
-            To Fund Wallet Reply with\n
+            To Fund Wallet Reply with
             /fund_wallet
-            \n
-            To Buy Log Reply with\n
+            To Buy Log Reply with
             /buy_log
-            \n
-            To Fund Wallet Reply with\n
+            To Fund Wallet Reply with
             /contact
 
             ";
