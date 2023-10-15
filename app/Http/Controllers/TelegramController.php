@@ -37,7 +37,7 @@ class TelegramController extends Controller
 
         //$gmessage = $data['message']['text'];
 
-        $message = $data['message'];
+        $message = $data;
 
 
 
