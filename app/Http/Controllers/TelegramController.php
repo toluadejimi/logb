@@ -50,7 +50,7 @@ class TelegramController extends Controller
 
             $message = "Welcome To LogsMarket";
             try {
-                $message = $this->bot->sendMessage([
+                $result = $this->bot->sendMessage([
                     'chat_id'      => $user_id,
                     'text'         => $message,
                     'reply_markup' => [
