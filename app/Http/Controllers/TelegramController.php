@@ -124,11 +124,11 @@ class TelegramController extends Controller
             $message = "Welcome To LogsMarket
             \n\n
             To check account Balance Reply with
-            /account_balance
+            /account_balance\n
             To Fund Wallet Reply with
-            /fund_wallet
+            /fund_wallet\n
             To Buy Log Reply with
-            /buy_log
+            /buy_log\n
             To Fund Wallet Reply with
             /contact
 
