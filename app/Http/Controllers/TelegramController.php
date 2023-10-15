@@ -34,16 +34,18 @@ class TelegramController extends Controller
         //Webhook
         //+++++++++++++++++++++++++++++++++++++++++
 
-        dd($request->all());
 
-        //$data = json_decode($request->all());
 
-        // if ($data) {
-        //     $this->chat_id      = $data->message->chat->id;
-        //     $this->message_text = $data->message->text;
-        // }
+        $data = $request->all();
 
-        // echo $data->message->text;
+        return Response::json($data);
+
+
+        if ($data) {
+            $this->chat_id      = $data->message->chat->id;
+            $this->message_text = $data->message->text;
+        }
+
     }
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     public function sendMessage(Request $request)
