@@ -88,6 +88,8 @@ class TelegramController extends Controller
 
         if($message_text == "account_balance"){
 
+            $user_id =  $data['message']['from']['id'];
+
 
         $username = User::where('t_user_id', $user_id)->first()->username ?? null;
 
