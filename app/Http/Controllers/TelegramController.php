@@ -60,7 +60,7 @@ class TelegramController extends Controller
 
 
 
-        if($message_text == "Hi" || $message_text == "/start" ||$message_text == "hi" ){
+        if ($message_text == "Hi" || $message_text == "/start" || $message_text == "hi") {
 
             $message = "Welcome To LogsMarket
             \n\n
@@ -82,52 +82,36 @@ class TelegramController extends Controller
                 'chat_id' => $user_id,
                 'text' => $message,
             ]);
-
         }
 
 
-        if($message_text == "account_balance"){
+        if ($message_text == "account_balance") {
 
             $user_id =  $data['message']['from']['id'];
 
 
-        $username = User::where('t_user_id', $user_id)->first()->username ?? null;
+            $username = User::where('t_user_id', $user_id)->first()->username ?? null;
 
-        if($username == null){
+            if ($username == null) {
 
-            $message = "Please kindly reply with your email to proceed";
+                $message = "Please kindly reply with your email to proceed";
+
+                $this->sendMessage([
+                    'chat_id' => $user_id,
+                    'text' => $message,
+                ]);
+            }
+
+            $balance = User::where('t_user_id', $user_id)->first()->wallet ?? null;
+
+            $amount = number_format($balance, 2);
+            $message = "Your Account Balance is :- NGN$amount";
 
             $this->sendMessage([
                 'chat_id' => $user_id,
                 'text' => $message,
             ]);
-
         }
-
-        $balance = User::where('t_user_id', $user_id)->first()->wallet ?? null;
-
-        $amount = number_format($balance, 2);
-        $message = "Your Account Balance is :- NGN$amount";
-
-        $this->sendMessage([
-            'chat_id' => $user_id,
-            'text' => $message,
-        ]);
-
-
-
-
-        }
-
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -140,10 +124,6 @@ class TelegramController extends Controller
         $url = "https://api.telegram.org/bot$token/sendMessage";
 
         $response = Http::post($url, $data);
-
-
-
-
     }
 
 
@@ -329,5 +309,4 @@ class TelegramController extends Controller
         }
         return Response::json($message);
     }
-
 }
