@@ -34,21 +34,46 @@ class TelegramController extends Controller
 
         $data = $request->all();
 
-        dd($data);
 
-        // Process the incoming data from Telegram
-        $message = $data['message']['text'];
+        $message = $data;
 
-        // Construct the response message
-        $responseMessage = "You said: $message";
+        $curl = curl_init();
 
-        // Send the response back to the user on Telegram
-        $this->sendMessage([
-            'chat_id' => $data['message']['chat']['id'],
-            'text' => $responseMessage,
-        ]);
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.telegram.org/bot6140179825:AAGfAmHK6JQTLegsdpnaklnhBZ4qA1m2c64/sendMessage?chat_id=1316552414',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'chat_id' => "1316552414",
+                'text' => $message,
 
-        return response()->json(['message' => 'Webhook received and response sent']);
+            ),
+            CURLOPT_HTTPHEADER => array(),
+        ));
+
+        $var = curl_exec($curl);
+        curl_close($curl);
+
+        $var = json_decode($var);
+
+        // // Process the incoming data from Telegram
+        // $message = $data['message']['text'];
+
+        // // Construct the response message
+        // $responseMessage = "You said: $message";
+
+        // // Send the response back to the user on Telegram
+        // $this->sendMessage([
+        //     'chat_id' => $data['message']['chat']['id'],
+        //     'text' => $responseMessage,
+        // ]);
+
+        // return response()->json(['message' => 'Webhook received and response sent']);
     }
 
     private function sendMessage($data)
