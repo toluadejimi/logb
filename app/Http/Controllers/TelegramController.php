@@ -320,8 +320,7 @@ class TelegramController extends Controller
 
             $get_item = MainItem::select('des', 'id', 'amount')->where('product_id', 1)->take(10)->get() ?? null;
 
-            if($get_item == []){
-
+            if($get_item -> isEmpty()){
 
             $message = "No Facebook Logs available at the moment";
 
@@ -330,7 +329,7 @@ class TelegramController extends Controller
                 'text' => $message,
             ]);
 
-            }
+            }else{
 
             $formattedRow = [];
             foreach ($get_item as $value) {
@@ -346,6 +345,12 @@ class TelegramController extends Controller
                 'chat_id' => $data['message']['from']['id'],
                 'text' => $message,
             ]);
+
+            }
+
+
+
+            dd($get_item, $message);
         }
     }
 
