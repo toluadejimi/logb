@@ -114,6 +114,20 @@ class TelegramController extends Controller
         }
 
 
+        if (str_contains($message_text, 'Buy_now')) {
+
+            $message = preg_replace("/[^\d]/", "", $message_text);
+
+            $this->sendMessage([
+                'chat_id' => $user_id,
+                'text' => $message,
+            ]);
+
+
+        }
+
+
+
         if ($message_text == "/buy_log") {
 
             $user_id =  $data['message']['from']['id'];
