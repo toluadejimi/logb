@@ -143,108 +143,28 @@ class TelegramController extends Controller
         if ($message_text == "Hi" || $message_text == "/start" || $message_text == "hi" || $message_text == "/main_menu") {
 
 
+            $message = "
+            ==================================
+            Welcome To LogsMarket
+            One stop shop for all your logs
+            ==================================
+            \n
+            /account_balance - Check your account balance\n
+            /fund_wallet - Fund Your Wallet\n
+            /buy_log - Buy Logs\n
+            /contact - Contact Us
 
 
-            $token = '6672089802:AAElshUyomrixNlnmiJNb7g75v9ku5YG3zc';
+            ";
 
-            // Create data
-            $data = http_build_query([
-                'text' => 'Yes - No - Stop?',
-                'chat_id' => $data['message']['from']['id']
+            $this->sendMessage([
+                'chat_id' => $user_id,
+                'text' => $message,
             ]);
 
-            // Create keyboard
-            $keyboard = json_encode([
-                "inline_keyboard" => [
-                    [
-                        [
-                            "text" => "Main Menu",
-                            "callback_data" => "true"
-                        ],
-                        [
-                            "text" => "Buy Log",
-                            "callback_data" => "/buy_log"
-                        ],
-                        [
-                            "text" => "Account Balance",
-                            "callback_data" => "/account_balance"
-                        ]
-                    ]
-                ]
-            ]);
-
-            // Send keyboard
-            $url = "https://api.telegram.org/bot$token/sendMessage?{$data}&reply_markup={$keyboard}";
-            $res = @file_get_contents($url);
 
 
 
-
-
-
-
-
-
-
-            // $message = "
-            // ==================================
-            // Welcome To LogsMarket
-            // One stop shop for all your logs
-            // ==================================
-            // \n
-            // /account_balance - Check your account balance\n
-            // /fund_wallet - Fund Your Wallet\n
-            // /buy_log - Buy Logs\n
-            // /contact - Contact Us
-
-
-            // ";
-
-            // $message = array([
-            //     'text'         => 'Welcome To Code-180 Youtube Channel',
-            //     'reply_markup' => [
-            //         'inline_keyboard' => [[[
-            //             'text' => '@code-180',
-            //             'url'  => 'https://www.youtube.com/@code-180/videos',
-            //         ]]],
-            //     ],
-            // ]);
-
-            // $this->sendMessage([
-            //     'chat_id' => $user_id,
-            //     'text' => $message,
-            // ]);
-
-
-            // $keyboard = json_encode([
-            //     "inline_keyboard" => [
-            //         [
-            //             [
-            //                 "text" => "Yes",
-            //                 "callback_data" => "yes"
-            //             ],
-            //             [
-            //                 "text" => "No",
-            //                 "callback_data" => "no"
-            //             ],
-            //             [
-            //                 "text" => "Stop",
-            //                 "callback_data" => "stop"
-            //             ]
-            //         ]
-            //     ]
-            // ]);
-
-
-            // $message = $this->bot->sendMessage([
-            //     'chat_id'      => $data['message']['from']['id'],
-            //     'text'         => 'Welcome To Code-180 Youtube Channel',
-            //     'reply_markup' => $keyboard,
-            // ]);
-            // $message = $this->bot->sendMessage([
-            //     'chat_id' => $this->chat_id,
-            //     'text'    => 'Welcome To Code-180 Youtube Channel',
-            // ]);
 
 
 
@@ -287,21 +207,19 @@ class TelegramController extends Controller
 
             $get_item = MainItem::select('des', 'id', 'amount')->where('product_id', 3)->take(10)->get() ?? null;
 
-            if($get_item == null){
+            if ($get_item->isEmpty()) {
 
+                $message = "No Google Voice Logs available at the moment";
 
-            $message = "No Google Voice available at the moment";
-
-            $this->sendMessage([
-                'chat_id' => $data['message']['from']['id'],
-                'text' => $message,
-            ]);
-
+                $this->sendMessage([
+                    'chat_id' => $data['message']['from']['id'],
+                    'text' => $message,
+                ]);
             }
 
             $formattedRow = [];
             foreach ($get_item as $value) {
-                $formattedRow[] = "/" . $value['id'] . " | " . $value['des'] . " | NGN ". $value['amount'];
+                $formattedRow[] = "/" . $value['id'] . " | " . $value['des'] . " | NGN " . $value['amount'];
             }
             $text = implode("\n", $formattedRow) . "\n";
             $filename = date('ymdhis') . 'data.txt';
@@ -315,42 +233,42 @@ class TelegramController extends Controller
             ]);
         }
 
+
+
+
+
+
+
         if ($message_text == "/Facebook") {
 
 
             $get_item = MainItem::select('des', 'id', 'amount')->where('product_id', 1)->take(10)->get() ?? null;
 
-            if($get_item -> isEmpty()){
+            if ($get_item->isEmpty()) {
 
-            $message = "No Facebook Logs available at the moment";
+                $message = "No Facebook Logs available at the moment";
 
-            $this->sendMessage([
-                'chat_id' => $data['message']['from']['id'],
-                'text' => $message,
-            ]);
+                $this->sendMessage([
+                    'chat_id' => $data['message']['from']['id'],
+                    'text' => $message,
+                ]);
+            } else {
 
-            }else{
+                $formattedRow = [];
+                foreach ($get_item as $value) {
+                    $formattedRow[] = "/" . $value['id'] . " | " . $value['des'] . " | NGN " . $value['amount'];
+                }
+                $text = implode("\n", $formattedRow) . "\n";
+                $filename = date('ymdhis') . 'data.txt';
 
-            $formattedRow = [];
-            foreach ($get_item as $value) {
-                $formattedRow[] = "/" . $value['id'] . " | " . $value['des'] . " | NGN ". $value['amount'];
+
+                $message = "List of Available Facebook Logs \n\n $text";
+
+                $this->sendMessage([
+                    'chat_id' => $data['message']['from']['id'],
+                    'text' => $message,
+                ]);
             }
-            $text = implode("\n", $formattedRow) . "\n";
-            $filename = date('ymdhis') . 'data.txt';
-
-
-            $message = "List of Available Facebook Logs \n\n $text";
-
-            $this->sendMessage([
-                'chat_id' => $data['message']['from']['id'],
-                'text' => $message,
-            ]);
-
-            }
-
-
-
-            dd($get_item, $message);
         }
     }
 
