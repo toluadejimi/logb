@@ -119,14 +119,39 @@ class TelegramController extends Controller
             $p_id = preg_replace("/[^\d]/", "", $message_text);
 
             $log = MainItem::where('id', $p_id)->first()->name;
+            $log_amount = MainItem::where('id', $p_id)->first()->amount;
+
+
+
+            $wallet = User::where('t_user_id', $user_id)->first()->wallet;
+
+
+            if($log_amount > $wallet){
+
+                $message = "Insufficient Funds Fund your wallet. | click /fund_wallet to fund wallet";
+
+                $this->sendMessage([
+                    'chat_id' => $user_id,
+                    'text' => $message,
+                ]);
+
+            }else{
+
 
             //MainItem::where('id', $p_id)->delete();
-
 
             $this->sendMessage([
                 'chat_id' => $user_id,
                 'text' => $log,
             ]);
+
+            }
+
+
+
+
+
+
 
 
         }
