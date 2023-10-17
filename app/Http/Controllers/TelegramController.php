@@ -285,7 +285,7 @@ class TelegramController extends Controller
         if ($message_text == "/Google_Voice") {
 
 
-            $get_item = MainItem::select('des', 'id')->where('product_id', 3)->take(10)->get();
+            $get_item = MainItem::select('des', 'id', 'amount')->where('product_id', 3)->take(10)->get();
 
 
             $formattedRow = [];
