@@ -122,13 +122,13 @@ class TelegramController extends Controller
             $message =
                 "Please select a service
 
-            1. /Google_Voice - To Buy Google Voice  Logs\n
+            1. /GV - To Buy Google Voice  Logs\n
             2. /Facebook - To Buy Facebook Logs \n
             3. /Instgram -  To Buy Instaragm Logs\n
             4. /Talkatone - To Buy Talkatone Logs\n
 
             Go back to menu
-            /main_menu";
+            /main_menu \n\n";
 
 
             $this->sendMessage([
@@ -202,7 +202,7 @@ class TelegramController extends Controller
 
 
 
-        if ($message_text == "/Google_Voice") {
+        if ($message_text == "/GV") {
 
 
             $get_item = MainItem::select('des', 'id', 'amount')->where('product_id', 3)->take(10)->get() ?? null;
@@ -219,7 +219,7 @@ class TelegramController extends Controller
 
             $formattedRow = [];
             foreach ($get_item as $value) {
-                $formattedRow[] = "/" . $value['id'] . " | " . $value['des'] . " | NGN " . $value['amount'];
+                $formattedRow[] = "/Buy_now" . $value['id'] . " | " . $value['des'] . " | NGN " . $value['amount'];
             }
             $text = implode("\n", $formattedRow) . "\n";
             $filename = date('ymdhis') . 'data.txt';
