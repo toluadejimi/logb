@@ -38,7 +38,12 @@ class TelegramController extends Controller
     {
 
 
+
         $json = json_encode($request->all());
+
+
+
+
 
         $data = json_decode($json, true);
 
@@ -154,7 +159,7 @@ class TelegramController extends Controller
                     [
                         [
                             "text" => "Main Menu",
-                            "callback_data" => "/start"
+                            "callback_data" => "true"
                         ],
                         [
                             "text" => "Buy Log",
@@ -173,49 +178,12 @@ class TelegramController extends Controller
             $res = @file_get_contents($url);
 
 
-            // Get message_id to alter later
-    $message_id = json_decode($res)->result->message_id;
 
-    // Continually check for a 'press'
-    while (true) {
 
-        // Call /getUpdates
-        $updates = @file_get_contents("https://api.telegram.org/bot$token/getUpdates");
-        $updates = json_decode($updates);
 
-        // Check if we've got a button press
-        if (count($updates->result) > 0 && isset(end($updates->result)->callback_query->data)) {
 
-            // Get callback data
-            $callBackData = end($updates->result)->callback_query->data;
 
-            // Check for 'stop'
-            if ($callBackData === 'stop') {
 
-                // Say goodbye and remove keyboard
-                $data = http_build_query([
-                    'text' => 'Bye!',
-                    'chat_id' => $data['message']['from']['id'],
-                    'message_id' => $message_id
-                ]);
-                $alter_res = @file_get_contents("https://api.telegram.org/bot$token/editMessageText?{$data}");
-
-                // End while
-                break;
-            }
-
-            // Alter text with callback_data
-            $data = http_build_query([
-                'text' => 'Selected: ' . $callBackData,
-                'chat_id' => $data['message']['from']['id'],
-                'message_id' => $message_id
-            ]);
-            $alter_res = @file_get_contents("https://api.telegram.org/bot$token/editMessageText?{$data}&reply_markup={$keyboard}");
-        }
-
-        // Sleep for a second, and check again
-        sleep(1);
-    }
 
 
             // $message = "
@@ -317,12 +285,12 @@ class TelegramController extends Controller
         if ($message_text == "/Google_Voice") {
 
 
-            $get_item = MainItem::select('des', 'id')->where('product_id', 2)->take(10)->get();
+            $get_item = MainItem::select('des', 'id')->where('product_id', 3)->take(10)->get();
 
 
             $formattedRow = [];
             foreach ($get_item as $value) {
-                $formattedRow[] = "/" . $value['id'] . " - " . $value['des'];
+                $formattedRow[] = "/" . $value['id'] . " | " . $value['des'] . " | NGN ". $value['amount'];
             }
             $text = implode("\n", $formattedRow) . "\n";
             $filename = date('ymdhis') . 'data.txt';
