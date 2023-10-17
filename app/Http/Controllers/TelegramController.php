@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\MainItem;
+use App\Models\Transaction;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -157,14 +158,20 @@ class TelegramController extends Controller
         }
 
 
+
+
+
+
+
+
+
         if ($message_text == "/fund_wallet") {
 
 
              $user_id =  $data['message']['from']['id'];
 
 
-             $message ="To fund wallet\n\n
-             Reply with Ex -:  Fund 1000 ";
+             $message ="Go to https://logmarketplace.com/fund-wallet";
 
 
             $this->sendMessage([
