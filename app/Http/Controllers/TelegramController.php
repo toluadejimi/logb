@@ -157,6 +157,24 @@ class TelegramController extends Controller
         }
 
 
+        if ($message_text == "/fund_wallet") {
+
+
+             $user_id =  $data['message']['from']['id'];
+
+
+             $message ="To fund wallet\n\n
+             Reply with Ex -:  Fund 1000 ";
+
+
+            $this->sendMessage([
+                'chat_id' => $user_id,
+                'text' => $message,
+            ]);
+
+        }
+
+
 
         if ($message_text == "/buy_log") {
 
