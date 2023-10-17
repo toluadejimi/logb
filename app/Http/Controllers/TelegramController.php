@@ -116,11 +116,16 @@ class TelegramController extends Controller
 
         if (str_contains($message_text, 'Buy_now')) {
 
-            $message = preg_replace("/[^\d]/", "", $message_text);
+            $p_id = preg_replace("/[^\d]/", "", $message_text);
+
+            $log = MainItem::where('id', $p_id)->first()->name;
+
+            //MainItem::where('id', $p_id)->delete();
+
 
             $this->sendMessage([
                 'chat_id' => $user_id,
-                'text' => $message,
+                'text' => $log,
             ]);
 
 
