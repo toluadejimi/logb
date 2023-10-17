@@ -314,6 +314,39 @@ class TelegramController extends Controller
                 'text' => $message,
             ]);
         }
+
+        if ($message_text == "/Facebook") {
+
+
+            $get_item = MainItem::select('des', 'id', 'amount')->where('product_id', 1)->take(10)->get() ?? null;
+
+            if($get_item == null){
+
+
+            $message = "No Facebook Logs available at the moment";
+
+            $this->sendMessage([
+                'chat_id' => $data['message']['from']['id'],
+                'text' => $message,
+            ]);
+
+            }
+
+            $formattedRow = [];
+            foreach ($get_item as $value) {
+                $formattedRow[] = "/" . $value['id'] . " | " . $value['des'] . " | NGN ". $value['amount'];
+            }
+            $text = implode("\n", $formattedRow) . "\n";
+            $filename = date('ymdhis') . 'data.txt';
+
+
+            $message = "List of Available Facebook Logs \n\n $text";
+
+            $this->sendMessage([
+                'chat_id' => $data['message']['from']['id'],
+                'text' => $message,
+            ]);
+        }
     }
 
 
